@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 from pymongo import MongoClient
-from typing import Optional
 
 app = FastAPI()
 
