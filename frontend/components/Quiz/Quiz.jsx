@@ -15,7 +15,7 @@ const Quiz = ({ navigation, quiz, subject }) => {
                     {quiz.title}
                 </Text>
                 <Text style={styles.subTitle}>
-                    {quiz.questionCount} Questions
+                    {quiz.questions.length} Questions
                 </Text>
             </View>
             <View style={styles.arrow}>

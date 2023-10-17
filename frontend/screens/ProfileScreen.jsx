@@ -3,6 +3,7 @@ import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AnimatedCircularProgress } from 'react-native-circular-progress'
+import AnimatedLottieView from 'lottie-react-native';
 
 
 const ProfileScreen = ({ navigation }) => {
@@ -14,7 +15,16 @@ const ProfileScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.profileHeader}>
                     <View>
-                        <Ionicons name="person-circle-outline" size={120} color="white" />
+                        {/* <Ionicons name="person-circle-outline" size={120} color="white" /> */}
+                        <AnimatedLottieView
+                            autoPlay
+                            style={{
+                                width: 100,
+                                height: 100,
+                                backgroundColor: '#202849',
+                            }}
+                            source={require('../assets/lottie/profile.json')}
+                        />
                     </View>
                     <View>
                         <Text style={{ color: 'white', fontSize: 30, textAlign: "center", fontWeight: 'bold' }}>Yousuf Khan</Text>

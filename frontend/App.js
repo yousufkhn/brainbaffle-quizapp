@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import AddQuiz from './screens/AddQuiz';
+import Bar from './screens/Bar';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,22 +18,22 @@ export default function App() {
 
   const [fetchedQuizData, setFetchQuizData] = useState([])
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://192.168.58.124:80/get_quiz_data');
+      const data = response.data;
+
+      // Convert data to the desired format
+      const convertedData = convertToNewFormat(data);
+
+      // Set the converted data to state
+      setFetchQuizData(convertedData);
+    } catch (error) {
+      console.error('Error fetching or converting data:', error);
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://192.168.19.124:80/get_quiz_data');
-        const data = response.data;
-
-        // Convert data to the desired format
-        const convertedData = convertToNewFormat(data);
-
-        // Set the converted data to state
-        setFetchQuizData(convertedData);
-      } catch (error) {
-        console.error('Error fetching or converting data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -64,7 +66,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name='home'>
           {(props) => <HomeScreen {...props} fetchedQuizData={fetchedQuizData} />}
         </Stack.Screen>
@@ -72,6 +74,11 @@ export default function App() {
           {(props) => <QuizScreen {...props} fetchedQuizData={fetchedQuizData} />}
         </Stack.Screen>
         <Stack.Screen name='profile' component={ProfileScreen} />
+        <Stack.Screen name='addQuiz'>
+          {(props) => <AddQuiz {...props} fetchData={fetchData} />}
+        </Stack.Screen>
+        <Stack.Screen name='bar' component={Bar} />
+
       </Stack.Navigator>
     </NavigationContainer>
 

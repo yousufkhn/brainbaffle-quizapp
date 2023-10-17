@@ -1,10 +1,23 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 // import { QuizData } from '../../data/dataConverter'
 import Quiz from '../Quiz/Quiz'
+import AnimatedLottieView from 'lottie-react-native';
 
 const QuizList = ({ navigation, QuizData }) => {
     const quizKeys = Object.keys(QuizData);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            // Hide the loading screen after 2 seconds
+            setIsLoading(false);
+        }, 2000);
+
+        // Clear the timer when the component unmounts
+        return () => clearTimeout(timer);
+    }, []);
+
 
     return (
         <ScrollView style={styles.container}>
@@ -12,8 +25,17 @@ const QuizList = ({ navigation, QuizData }) => {
                 <Text style={styles.heading}>Quizzes</Text>
                 <TouchableOpacity ><Text style={styles.viewAll}>View all</Text></TouchableOpacity>
             </View>
-
-            <ScrollView>
+            {isLoading ? <View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
+                <AnimatedLottieView
+                    autoPlay
+                    style={{
+                        width: 300,
+                        height: 300,
+                        backgroundColor: '#202849',
+                    }}
+                    source={require('../../assets/lottie/bookLoading.json')}
+                />
+            </View> : <ScrollView>
                 {quizKeys.map((subject, index) => {
                     const quiz = QuizData[subject];
                     return <Quiz
@@ -22,7 +44,7 @@ const QuizList = ({ navigation, QuizData }) => {
                         navigation={navigation}
                         subject={subject} />;
                 })}
-            </ScrollView>
+            </ScrollView>}
         </ScrollView>
     )
 }

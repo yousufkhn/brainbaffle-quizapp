@@ -32,58 +32,29 @@ def add_document(data):
 
 
 example_data = {
-    "Document ID": "6528df1accadfdb062349329",
-    "title": "React Native",
-    "questionCount": 5,
+    "title": "Haha",
+    "questionCount": 2,
     "questions": [
         {
-            "question": "What is React Native used for?",
+            "question": "Haha",
             "Options": [
-                "Building web applications",
-                "Building mobile applications",
-                "Building desktop applications",
-                "Building server-side applications"
+                "Jaj",
+                "Jaj",
+                "Jaiai",
+                "Kaka"
             ],
-            "correct": 2,
+            "correct": -1,
             "marked": -1
         },
         {
-            "question": "Which of the following is not a core component in React Native?",
-            "Options": ["View", "Text", "Image", "Button"],
-            "correct": 4,
-            "marked": -1
-        },
-        {
-            "question": "What is the purpose of the 'useState' hook in React Native?",
+            "question": "Hdhs",
             "Options": [
-                "To handle network requests",
-                "To manage and update component state",
-                "To create animations",
-                "To handle navigation"
+                "Sjs",
+                "Sj",
+                "Sa",
+                "A"
             ],
-            "correct": 2,
-            "marked": -1
-        },
-        {
-            "question": "Which command is used to create a new React Native project?",
-            "Options": [
-                "create-react-native-app",
-                "npm init react-native",
-                "react-native init",
-                "npm create-react-native"
-            ],
-            "correct": 3,
-            "marked": -1
-        },
-        {
-            "question": "In React Native, how can you navigate between screens?",
-            "Options": [
-                "Using the 'navigate' method",
-                "Using the 'goTo' function",
-                "Using the 'switchScreen' function",
-                "Using the 'moveTo' method"
-            ],
-            "correct": 1,
+            "correct": -1,
             "marked": -1
         }
     ]

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse, JSONResponse
 from pymongo import MongoClient
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -10,7 +11,11 @@ client = MongoClient(uri)
 db = client["quizzes"]
 collection = db["quiz"]
 
-# Routes
+
+class QuizData(BaseModel):
+    title: str
+    questionCount: int
+    questions: list
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -46,6 +51,12 @@ def get_quiz_data():
     # data = retrieve_data({"title": "maths"})
     data = retrieve_data()
     return data
+
+
+@app.post("/send_quiz_data", response_class=JSONResponse)
+def sendQuizData(data: QuizData):
+    # Insert the document into the collection
+    result = collection.insert_one(data.dict())
 
 
 def retrieve_data(query={}):

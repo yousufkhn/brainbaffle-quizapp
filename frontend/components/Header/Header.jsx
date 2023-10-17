@@ -1,7 +1,8 @@
-import { KeyboardAvoidingView, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
+import AnimatedLottieView from 'lottie-react-native';
 
 const Header = ({ navigation }) => {
     return (
@@ -9,11 +10,20 @@ const Header = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.topContainer}>
                 <View style={styles.menuBtn} >
-                    <FontAwesome5 name="bars" size={35} color="#077fec" />
+                    <FontAwesome5 name="bars" size={35} color="#077fec" onPress={() => navigation.navigate('bar')} />
                 </View>
-                <View style={styles.profile} >
-                    <MaterialIcons name="account-circle" size={60} color="#077fec" onPress={() => navigation.navigate("profile")} />
-                </View>
+                <TouchableOpacity style={styles.profile} onPress={() => navigation.navigate("profile")}>
+                    {/* <MaterialIcons name="account-circle" size={60} color="#077fec" onPress={() => navigation.navigate("profile")} /> */}
+                    <AnimatedLottieView
+                        autoPlay
+                        style={{
+                            width: 80,
+                            height: 80,
+                            backgroundColor: '#202849',
+                        }}
+                        source={require('../../assets/lottie/profile.json')}
+                    />
+                </TouchableOpacity>
             </View>
             <View style={styles.greeting}>
                 <Text style={styles.text1}>Hello,Yousuf</Text>
@@ -60,7 +70,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        margin: 20
     },
     menuBtn: {
         flex: 1,
