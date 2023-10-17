@@ -46,9 +46,6 @@ def read_root():
 
 @app.get("/get_quiz_data", response_class=JSONResponse)
 def get_quiz_data():
-    # Retrieve data from MongoDB
-    # You should define retrieve_data function
-    # data = retrieve_data({"title": "maths"})
     data = retrieve_data()
     return data
 
@@ -65,18 +62,19 @@ def retrieve_data(query={}):
         result = collection.find(query)
 
         # Check if any documents were found
-        if result.count() > 0:
-            documents = []
-            for document in result:
-                documents.append({
-                    "Document ID": str(document["_id"]),
-                    "Title": document["title"],
-                    "Question Count": document["questionCount"],
-                    "Questions": document["questions"]
-                })
-            return documents
-        else:
-            return {"message": "No documents found."}
+        documents = []
+        for document in result:
+            documents.append({
+                "Document ID": str(document["_id"]),
+                "Title": document["title"],
+                "Question Count": document["questionCount"],
+                "Questions": document["questions"]
+            })
+        return documents
+        # if result.count() > 0:
+
+        # else:
+        #     return {"message": "No documents found."}
 
     except Exception as e:
         return {"error": str(e)}
