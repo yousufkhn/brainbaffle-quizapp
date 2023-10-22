@@ -2,11 +2,23 @@ import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 
-const SearchBar = () => {
+const SearchBar = ({ searchQuery, setSearchQuery }) => {
     return (
         <View style={styles.searchbar}>
-            <TextInput placeholder='Search Quizzes' placeholderTextColor="white" style={{ fontSize: 15 }} />
-            <Feather name="search" size={30} color="#D0BFFF" />
+            <Feather name="search" size={35} color="#D0BFFF" />
+            <TextInput
+                placeholder='Search Quizzes'
+                placeholderTextColor="white"
+                style={{
+                    width: '100%',
+                    fontSize: 18,
+                    borderRadius: 22,
+                    color: 'white'
+                }}
+                value={searchQuery}
+                onChangeText={text => setSearchQuery(text)}
+            />
+
         </View>
     )
 }
@@ -17,12 +29,13 @@ const styles = StyleSheet.create({
     searchbar: {
         padding: 18,
         marginHorizontal: 20,
-        // marginVertical: 10,
+        marginVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: '#4D4C7D',
         borderRadius: 22,
-        color: 'white'
+        gap: 10
+        // color: 'white'
     }
 })

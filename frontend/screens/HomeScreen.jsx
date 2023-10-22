@@ -8,6 +8,19 @@ import { StatusBar } from 'expo-status-bar';
 import AppBar from '../components/AppBar/AppBar'
 
 const HomeScreen = ({ navigation, fetchedQuizData }) => {
+    const originalData = fetchedQuizData;
+    const [searchQuery, setSearchQuery] = useState('');
+    const [filteredQuizData, setFilteredQuizData] = useState(fetchedQuizData);
+
+    // console.log(fetchedQuizData)
+    useEffect(() => {
+        const quizArray = Object.values(fetchedQuizData);
+        const filteredData = quizArray.filter(quiz => {
+            return quiz.title.toLowerCase().includes(searchQuery.toLowerCase());
+        });
+        setFilteredQuizData(filteredData);
+    }, [searchQuery, fetchedQuizData]);
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -16,10 +29,13 @@ const HomeScreen = ({ navigation, fetchedQuizData }) => {
                 <Header navigation={navigation} />
             </View>
             <View style={styles.searchBar}>
-                <SearchBar />
+                <SearchBar
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                />
             </View>
-            <View style={styles.quizList}>
-                <QuizList navigation={navigation} QuizData={fetchedQuizData} />
+            <View style={styles.quizList} >
+                <QuizList navigation={navigation} QuizData={filteredQuizData} />
             </View>
             <AppBar navigation={navigation} />
         </SafeAreaView>

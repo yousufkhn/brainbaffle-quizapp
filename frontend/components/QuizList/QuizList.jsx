@@ -7,6 +7,7 @@ import AnimatedLottieView from 'lottie-react-native';
 const QuizList = ({ navigation, QuizData }) => {
     const quizKeys = Object.keys(QuizData);
     const [isLoading, setIsLoading] = useState(true);
+    // console.log(quizKeys)
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -38,11 +39,12 @@ const QuizList = ({ navigation, QuizData }) => {
             </View> : <ScrollView>
                 {quizKeys.map((subject, index) => {
                     const quiz = QuizData[subject];
+
                     return <Quiz
                         key={index}
                         quiz={quiz}
                         navigation={navigation}
-                        subject={subject} />;
+                        subject={quiz.title} />;
                 })}
             </ScrollView>}
         </ScrollView>

@@ -4,6 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 const Quiz = ({ navigation, quiz, subject }) => {
+    // console.log(subject)
     return (
         <TouchableOpacity style={styles.container} onPress={() => navigation.navigate("quiz", { subject })}>
             <View style={styles.logo}>
