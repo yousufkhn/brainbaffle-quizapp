@@ -7,7 +7,7 @@ const { height, width } = Dimensions.get('window')
 import LottieView from 'lottie-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const QuizScreen = ({ route, fetchedQuizData }) => {
+const QuizScreen = ({ route, fetchedQuizData, navigation }) => {
   const QuizData = fetchedQuizData
   const { subject } = route.params;
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -112,7 +112,7 @@ const QuizScreen = ({ route, fetchedQuizData }) => {
           }}>
           <View
             style={{
-              backgroundColor: '#fff',
+              backgroundColor: '#f8fafc',
               width: '90%',
               justifyContent: 'center',
               alignItems: 'center',
@@ -132,7 +132,7 @@ const QuizScreen = ({ route, fetchedQuizData }) => {
               style={{
                 width: 250,
                 height: 250,
-                backgroundColor: '#eee',
+                backgroundColor: '#f8fafc',
               }}
               source={require('../assets/lottie/result.json')}
             />
@@ -149,6 +149,7 @@ const QuizScreen = ({ route, fetchedQuizData }) => {
             <TouchableOpacity
               onPress={() => {
                 setModalVisible(!modalVisible);
+                navigation.navigate("home");
               }}
               style={{
                 alignSelf: 'center',
@@ -163,7 +164,7 @@ const QuizScreen = ({ route, fetchedQuizData }) => {
                 backgroundColor: '#ff3d59'
               }}
             >
-              <Text style={{ fontSize: 20, color: 'white' }}>Close</Text>
+              <Text style={{ fontSize: 20, color: 'white' }} >Close</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -81,7 +81,7 @@ const AddQuiz = ({ navigation, fetchData }) => {
             })),
         };
         const formattedData = JSON.stringify(data, null, 2)
-        axios.post('http://192.168.58.124:80/send_quiz_data', {
+        axios.post('https://quizapp-utxw.onrender.com/send_quiz_data', {
             title: quizName,
             questionCount: questions.length,
             questions: questions.map((question) => ({
@@ -128,7 +128,6 @@ const AddQuiz = ({ navigation, fetchData }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-
             <View style={{ flex: 15 }}>
                 <Text style={styles.heading}>Make your own Quiz</Text>
                 <TextInput

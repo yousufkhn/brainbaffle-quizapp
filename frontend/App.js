@@ -20,7 +20,7 @@ export default function App() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://192.168.58.124:80/get_quiz_data');
+      const response = await axios.get('https://quizapp-utxw.onrender.com/get_quiz_data');
       const data = response.data;
 
       // Convert data to the desired format
