@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 // import { QuizData } from '../../data/dataConverter'
 import Quiz from '../Quiz/Quiz'
 import AnimatedLottieView from 'lottie-react-native';
+import * as Animatable from 'react-native-animatable';
 
 const QuizList = ({ navigation, QuizData }) => {
     const quizKeys = Object.keys(QuizData);
@@ -40,11 +41,18 @@ const QuizList = ({ navigation, QuizData }) => {
                 {quizKeys.map((subject, index) => {
                     const quiz = QuizData[subject];
 
-                    return <Quiz
-                        key={index}
-                        quiz={quiz}
-                        navigation={navigation}
-                        subject={quiz.title} />;
+                    return <>
+                        <Animatable.View
+                            animation='fadeInUp'
+                            delay={index * 50}>
+                            <Quiz
+                                key={index}
+                                quiz={quiz}
+                                navigation={navigation}
+                                subject={quiz.title} />
+                        </Animatable.View></>
+
+                        ;
                 })}
             </ScrollView>}
         </ScrollView>

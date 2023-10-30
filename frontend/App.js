@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddQuiz from './screens/AddQuiz';
 import Bar from './screens/Bar';
+import Login from './screens/auth/Login';
+import SignUp from './screens/auth/SignUp';
 
 const Stack = createNativeStackNavigator();
 
@@ -66,7 +68,13 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+        <Stack.Screen name='login'>
+          {(props) => <Login {...props} />}
+        </Stack.Screen>
+        <Stack.Screen name='signup'>
+          {(props) => <SignUp {...props} />}
+        </Stack.Screen>
         <Stack.Screen name='home'>
           {(props) => <HomeScreen {...props} fetchedQuizData={fetchedQuizData} />}
         </Stack.Screen>

@@ -1,13 +1,18 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddQuestion from '../components/AddQuestion/AddQuestion';
 import axios from 'axios';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
+import * as Animatable from 'react-native-animatable';
+import { AntDesign } from '@expo/vector-icons';
+const QUESTION_HEIGHT = 550;
 
 const AddQuiz = ({ navigation, fetchData }) => {
+    const scrollViewRef = useRef(null);
+
     const [quizName, setQuizName] = useState('');
     const [questions, setQuestions] = useState(
         [{
@@ -27,6 +32,11 @@ const AddQuiz = ({ navigation, fetchData }) => {
                 "marked": -1,
             },
         ]);
+        if (scrollViewRef.current) {
+            const addedQuestionIndex = questions.length;
+            const yPosition = addedQuestionIndex * QUESTION_HEIGHT;
+            scrollViewRef.current.scrollTo({ y: yPosition, animated: true });
+        }
     };
 
     const handleQuestionNameChange = (text, index) => {
@@ -125,10 +135,16 @@ const AddQuiz = ({ navigation, fetchData }) => {
             });
     };
 
+    const handleScrollToEnd = () => {
+        if (scrollViewRef.current) {
+            scrollViewRef.current.scrollToEnd({ animated: true });
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ flex: 15 }}>
+                <Ionicons name="chevron-back" size={40} color="white" onPress={() => navigation.navigate("home")} />
                 <Text style={styles.heading}>Make your own Quiz</Text>
                 <TextInput
                     placeholder='Name your Quiz'
@@ -137,22 +153,26 @@ const AddQuiz = ({ navigation, fetchData }) => {
                     value={quizName}
                     onChangeText={handleQuizNameChange}
                 />
-                <ScrollView >
+                <ScrollView ref={scrollViewRef} >
                     <Toast />
 
                     {questions.map((question, index) => (
-                        <View key={index} style={styles.questionContainer}>
-                            <Text style={{ color: 'white', fontSize: 20, }}> Question No.{index + 1}</Text>
-                            <AddQuestion question={question} onQuestionNameChange={(text) => handleQuestionNameChange(text, index)}
-                                onChangeOption={(text, optionIndex) => handleChangeOption(text, index, optionIndex)}
-                                onCorrectChange={(value) => handleCorrectChange(value, index)} />
-                            <TouchableOpacity onPress={() => handleRemoveQuestion(index)} style={styles.deleteButton}>
-                                <MaterialCommunityIcons name="delete-outline" size={24} color="white" />
-                                <Text style={{ color: 'white', fontSize: 20 }}>Delete Question</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Animatable.View key={index} animation='fadeInUp' duration={700}>
+                            <View key={index} style={styles.questionContainer}>
+                                <Text style={{ color: 'white', fontSize: 20, }}> Question No.{index + 1}</Text>
+                                <AddQuestion question={question} onQuestionNameChange={(text) => handleQuestionNameChange(text, index)}
+                                    onChangeOption={(text, optionIndex) => handleChangeOption(text, index, optionIndex)}
+                                    onCorrectChange={(value) => handleCorrectChange(value, index)} />
+                                <TouchableOpacity onPress={() => handleRemoveQuestion(index)} style={styles.deleteButton}>
+                                    <MaterialCommunityIcons name="delete-outline" size={24} color="white" />
+                                    <Text style={{ color: 'white', fontSize: 20 }}>Delete Question</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </Animatable.View>
+
 
                     ))}
+
                     <TouchableOpacity onPress={handleAddQuestion} style={styles.addButton}>
                         <Ionicons name="add-circle-outline" size={24} color="white" />
                         <Text style={{ color: 'white', fontSize: 20, }}>Add Question</Text>
@@ -162,6 +182,9 @@ const AddQuiz = ({ navigation, fetchData }) => {
             </View>
             <TouchableOpacity onPress={handleSubmit} style={styles.submitButton}>
                 <Text style={{ color: 'white', fontSize: 20 }}>Submit Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleScrollToEnd} style={{ position: 'absolute', bottom: 75, right: 20 }}>
+                <AntDesign name="downcircle" size={40} color="white" />
             </TouchableOpacity>
         </SafeAreaView >
     )
@@ -176,21 +199,24 @@ const styles = StyleSheet.create({
         padding: 10,
         paddingTop: 20,
         justifyContent: 'space-between',
-        // alignItems: 'center'
+        // alignItems: 'center',
+        position: 'relative'
     },
     heading: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: 30,
-        textAlign: 'center'
+        // textAlign: 'center',
+        margin: 10
     },
     input: {
         padding: 13,
-        margin: 20,
+        marginBottom: 10,
+        marginRight: 10,
         // marginVertical: 10,
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        // alignItems: 'center',
+        // justifyContent: 'space-between',
         backgroundColor: '#4D4C7D',
         borderRadius: 22,
         color: 'white',
@@ -240,7 +266,5 @@ const styles = StyleSheet.create({
         marginHorizontal: 55,
         height: 50,
         backgroundColor: '#077fec',
-
-
     }
 })
