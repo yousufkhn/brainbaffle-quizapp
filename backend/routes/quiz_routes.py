@@ -28,6 +28,6 @@ def send_quiz_data(data: QuizData):
     return result
 
 
-@router.get("/users/me")
-async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
-    return current_user
+# @router.get("/users/me")
+# async def read_users_me(current_user: Annotated[User, Depends(get_current_user)]):
+#     return current_user
